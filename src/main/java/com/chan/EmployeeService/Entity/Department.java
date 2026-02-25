@@ -14,8 +14,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.List;
+import com.chan.EmployeeService.Entity.Employee;
 
-@Entity 
+@Entity
 
 @Table(name = "departments") // Table Name
 @Getter
@@ -26,7 +27,7 @@ public class Department {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @Column(unique = true, nullable = false)// Unique , Not Null 
+  @Column(unique = true, nullable = false) // Unique , Not Null
   private String name;
   private String description;
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "department") // Dont Load the Employee Unitl
