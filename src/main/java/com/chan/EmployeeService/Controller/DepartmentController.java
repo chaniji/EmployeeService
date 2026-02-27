@@ -15,6 +15,8 @@ import jakarta.validation.Valid;
 
 import com.chan.EmployeeService.DataTransferObject.DepartmentRequest;
 import com.chan.EmployeeService.DataTransferObject.DepartmentResponse;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/departments")
@@ -27,5 +29,16 @@ public class DepartmentController {
     DepartmentResponse rs = DService.createDepartment(DRequest);
     return ResponseEntity.status(HttpStatus.CREATED).body(rs);
   }
+
+  @GetMapping("/getbyid")
+
+  public ResponseEntity<DepartmentResponse> getbyID() {
+    
+
+
+
+  }
+
+}
 
 }
