@@ -25,4 +25,9 @@ public class DepartmentService {
   private DepartmentResponse maptoResponse(Department d) {
     return new DepartmentResponse(d.getId(), d.getName(), d.getDescription());
   }
+
+  public DepartmentResponse getDepartmentById(Long id) {
+    Department department = DRepo.findById(id).orElseThrow();
+    return maptoResponse(department);
+  }
 }
