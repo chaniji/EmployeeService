@@ -31,12 +31,9 @@ public class DepartmentController {
   }
 
   @GetMapping("/getbyid")
-
-  public ResponseEntity<DepartmentResponse> getbyID() {
-    
-
-
-
+  public ResponseEntity<DepartmentResponse> getbyID(@RequestParam Long id) {
+    DepartmentResponse response = DService.getDepartmentById(id);
+    return ResponseEntity.ok(response);
   }
 
 }
