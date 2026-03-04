@@ -1,5 +1,7 @@
 package com.chan.EmployeeService.Controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -47,4 +49,10 @@ public class EmployeeController {
       @PathVariable Long id) {
     return ResponseEntity.status(HttpStatus.OK).body(EService.updateEmployeeById(ERequest, id));
   }
+
+  @GetMapping
+  public ResponseEntity<List<EmployeeResponse>> getAllEmployee() {
+    return ResponseEntity.status(HttpStatus.OK).body(EService.getAllEmployee());
+  }
+
 }

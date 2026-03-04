@@ -1,5 +1,7 @@
 package com.chan.EmployeeService.Service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
@@ -11,6 +13,7 @@ import com.chan.EmployeeService.Repository.EmployeeRepo;
 import com.chan.EmployeeService.Entity.Department;
 import com.chan.EmployeeService.Entity.Employee;
 import com.chan.EmployeeService.Exceptions.ResourcenotfoundException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,11 +55,15 @@ public class EmployeeService {
     saved.setEmail(ERequest.getEmail());
     saved.setSalary(ERequest.getSalary());
     saved.setJoinDate(ERequest.getJoinDate());
-       Department   Dsaved = DRepo.findById(ERequest.getDepartmentId())
+    Department Dsaved = DRepo.findById(ERequest.getDepartmentId())
         .orElseThrow(() -> new ResourcenotfoundException("Id Could not Found:" + ERequest.getDepartmentId()));
     saved.setDepartment(Dsaved);
-  
+
     return maptoResponse(ERepo.save(saved));
+  }
+
+  public List<EmployeeResponse> getAllEmployee() {
+    return ERepo.findAll().stream().map(this::maptoResponse).collect(Collectors.toList());
   }
 
   private EmployeeResponse maptoResponse(Employee Emp) {
