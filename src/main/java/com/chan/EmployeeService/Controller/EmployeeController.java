@@ -21,6 +21,7 @@ import com.chan.EmployeeService.DataTransferObject.EmployeeResponse;
 import lombok.RequiredArgsConstructor;
 import com.chan.EmployeeService.DataTransferObject.EmployeeRequest;
 import com.chan.EmployeeService.DataTransferObject.MessageResponse;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @RestController
@@ -53,6 +54,11 @@ public class EmployeeController {
   @GetMapping
   public ResponseEntity<List<EmployeeResponse>> getAllEmployee() {
     return ResponseEntity.status(HttpStatus.OK).body(EService.getAllEmployee());
+  }
+
+  @GetMapping("/departments/{id}")
+  public ResponseEntity<List<EmployeeResponse>> getEmployeeByDepartmentID(@PathVariable Long id) {
+    return ResponseEntity.status(HttpStatus.OK).body(EService.getEmployeebyDepartmentId(id));
   }
 
 }

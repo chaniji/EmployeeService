@@ -66,6 +66,11 @@ public class EmployeeService {
     return ERepo.findAll().stream().map(this::maptoResponse).collect(Collectors.toList());
   }
 
+  public List<EmployeeResponse> getEmployeebyDepartmentId(Long id) {
+    Department saved = DRepo.findById(id).orElseThrow(() -> new ResourcenotfoundException("Id Could not found" + id));
+    return ERepo.findByDepartment(saved).stream().map(this::maptoResponse).collect(Collectors.toList());
+  }
+
   private EmployeeResponse maptoResponse(Employee Emp) {
     return new EmployeeResponse(Emp.getId(), Emp.getFirstName(), Emp.getLastName(), Emp.getSalary(), Emp.getJoinDate(),
         Emp.getDepartment().getId());
