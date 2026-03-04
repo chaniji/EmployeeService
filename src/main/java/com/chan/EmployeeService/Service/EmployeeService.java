@@ -1,0 +1,40 @@
+package com.chan.EmployeeService.Service;
+
+import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
+
+import com.chan.EmployeeService.DataTransferObject.EmployeeRequest;
+import com.chan.EmployeeService.DataTransferObject.EmployeeResponse;
+import com.chan.EmployeeService.Repository.DepartmentRepo;
+import com.chan.EmployeeService.Repository.EmployeeRepo;
+import com.chan.EmployeeService.Entity.Department;
+import com.chan.EmployeeService.Entity.Employee;
+import com.chan.EmployeeService.Exceptions.ResourcenotfoundException;
+
+@Service
+@RequiredArgsConstructor
+public class EmployeeService {
+
+  private final DepartmentRepo DRepo;
+  private final EmployeeRepo ERepo;
+
+  public EmployeeResponse createEmployee(EmployeeRequest ERequest) {
+    Employee E1 = new Employee();
+    E1.setFirstName(ERequest.getFirstName());
+    E1.setLastName(ERequest.getLastName());
+    E1.setEmail(ERequest.getEmail());
+    E1.setSalary(ERequest.getSalary());
+    E1.setJoinDate(ERequest.getJoinDate());
+    Department saved = DRepo.findById(ERequest.getDepartmentId())
+        .orElseThrow(() -> new ResourcenotfoundException("Id Could not Found:" + ERequest.getDepartmentId()));
+    E1.setDepartment(saved);
+    return maptoResponse(ERepo.save(E1));
+  }
+
+  private EmployeeResponse maptoResponse(Employee Emp) {
+    return new EmployeeResponse(Emp.getId(), Emp.getFirstName(), Emp.getLastName(), Emp.getSalary(), Emp.getJoinDate(),
+        Emp.getDepartment().getId());
+
+  }
+
+}
