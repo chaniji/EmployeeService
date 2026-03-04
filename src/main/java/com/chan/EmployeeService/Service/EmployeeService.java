@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.chan.EmployeeService.DataTransferObject.EmployeeRequest;
 import com.chan.EmployeeService.DataTransferObject.EmployeeResponse;
+import com.chan.EmployeeService.DataTransferObject.MessageResponse;
 import com.chan.EmployeeService.Repository.DepartmentRepo;
 import com.chan.EmployeeService.Repository.EmployeeRepo;
 import com.chan.EmployeeService.Entity.Department;
@@ -29,6 +30,33 @@ public class EmployeeService {
         .orElseThrow(() -> new ResourcenotfoundException("Id Could not Found:" + ERequest.getDepartmentId()));
     E1.setDepartment(saved);
     return maptoResponse(ERepo.save(E1));
+  }
+
+  public EmployeeResponse getEmployeeById(Long id) {
+
+    Employee saved = ERepo.findById(id).orElseThrow(() -> new ResourcenotfoundException("Id Could not found" + id));
+    return maptoResponse(saved);
+  }
+
+  public MessageResponse deleteEmployeeById(Long id) {
+    Employee saved = ERepo.findById(id).orElseThrow(() -> new ResourcenotfoundException("Id Could not found" + id));
+    ERepo.delete(saved);
+    return new MessageResponse("Deleted Successfully");
+
+  }
+
+  public EmployeeResponse updateEmployeeById(EmployeeRequest ERequest, Long id) {
+    Employee saved = ERepo.findById(id).orElseThrow(() -> new ResourcenotfoundException("Id Could not found" + id));
+    saved.setFirstName(ERequest.getFirstName());
+    saved.setLastName(ERequest.getLastName());
+    saved.setEmail(ERequest.getEmail());
+    saved.setSalary(ERequest.getSalary());
+    saved.setJoinDate(ERequest.getJoinDate());
+       Department   Dsaved = DRepo.findById(ERequest.getDepartmentId())
+        .orElseThrow(() -> new ResourcenotfoundException("Id Could not Found:" + ERequest.getDepartmentId()));
+    saved.setDepartment(Dsaved);
+  
+    return maptoResponse(ERepo.save(saved));
   }
 
   private EmployeeResponse maptoResponse(Employee Emp) {
