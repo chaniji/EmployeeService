@@ -1,7 +1,6 @@
 package com.chan.EmployeeService.Entity;
 
 import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

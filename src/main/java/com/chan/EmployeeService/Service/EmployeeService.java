@@ -1,10 +1,10 @@
 package com.chan.EmployeeService.Service;
 
 import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
-
 import com.chan.EmployeeService.DataTransferObject.EmployeeRequest;
 import com.chan.EmployeeService.DataTransferObject.EmployeeResponse;
 import com.chan.EmployeeService.DataTransferObject.MessageResponse;
@@ -62,8 +62,8 @@ public class EmployeeService {
     return maptoResponse(ERepo.save(saved));
   }
 
-  public List<EmployeeResponse> getAllEmployee() {
-    return ERepo.findAll().stream().map(this::maptoResponse).collect(Collectors.toList());
+  public Page<EmployeeResponse> getAllEmployee(Pageable pageable) {
+    return ERepo.findAll(pageable).map(this::maptoResponse);
   }
 
   public List<EmployeeResponse> getEmployeebyDepartmentId(Long id) {
